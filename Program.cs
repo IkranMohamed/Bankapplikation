@@ -47,7 +47,7 @@
                
                                 case "3":
                                     double amountOfMoneyToDeposit = HandleMoneyInput();
-                                    selectedAccount.Deposit(amountToDeposit);
+                                    selectedAccount.Deposit(amountOfMoneyToDeposit);
                                 break;
                             default:
 
