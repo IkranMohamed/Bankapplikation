@@ -12,12 +12,8 @@
         }
 
 
-        // public PersonalAccount(string AccountHolder)
-        // {
-        //  this.AccountHolderName = AccountHolderName;
-        //  this.AccountNumber = 444;
-        //  this.Balance = 500;
-        // }
+
+
 
         public class Bankkonto
         {

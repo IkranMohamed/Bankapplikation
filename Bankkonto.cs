@@ -10,8 +10,8 @@ namespace Bankapplikation
 
         public double Balance {  get; set; }
 
-       
-        //TransaktionHistorik
+
+
 
         ///Constructor
 
@@ -23,33 +23,56 @@ namespace Bankapplikation
         
         
         }
-        public void Deposit(int amountToDeposit)
+        public void Deposit(double amountToDeposit)
         {
-            Balance = Balance + amountToDeposit;
-            Console.WriteLine("$ Your Balance is {Balance}");
+            Balance += amountToDeposit;
+            Console.WriteLine($"Your Balance is {Balance:C}");
         }
 
-        public void Draw(int amountToDraw)
+        public void Draw(double amountToDraw)
         {
-            Balance = Balance - amountToDraw;
-            Console.WriteLine("$ Your Balance is {Balance}");
+            if (amountToDraw > Balance) 
+            {
+
+                Console.WriteLine("Insufficient funds.");
+
+            }
+            else 
+            {
+                Balance -= amountToDraw;
+                Console.WriteLine($"Your Balance is {Balance:C}");
+            }
         }
 
         public void CheckBalance()
         {
-            Console.WriteLine("$ Your Balance is {Balance}");
+            Console.WriteLine($"Your Balance is {Balance:C}");
         }
 
-        public void TransferMoney(int amountOfMoney)
+        public void TransferMoney(double amount, Bankkonto toAccount)
         {
-            throw new NotImplementedException();
+            if (amount > Balance)
+            {
+                Console.WriteLine("Insufficient funds.");
+            }
+            else 
+            {
+                this.Draw(amount); // Withdraw from the current account
+                toAccount.Deposit(amount); // Deposit to the target account
+                Console.WriteLine($"Transferred {amount:C} to {toAccount.AccountUserName}'s account.");
+            }
 
         }
 
-        internal Bankkonto VäljEttKonto()
+        public Bankkonto VäljEttKonto()
+        {
+            return this; // In a real case scenario, this could allow the user to choose between multiple accounts
+        }
+
+        internal void Deposit(object amountToDeposit)
         {
             throw new NotImplementedException();
-        }    
-        
+        }
     }
+
 }

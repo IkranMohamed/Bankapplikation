@@ -2,63 +2,65 @@
 {
     internal class Program
     {
+        private static double amountToDeposit;
+
         static void Main(string[] args)
         {
-            Bankkonto ikran = new Bankkonto("Ikrans konto", 4, 40000);
+            //Bankkonto ikran = new Bankkonto("Ikrans konto", 4, 40000);
+            User ikran = new User("Ikran");
 
- 
             bool programIsRunning = true;
             while (programIsRunning)
             {
                 PrintOutFirstMeny();
-                Console.WriteLine("Välj ett alternativ 3 eller 4");
-                string valdAlternativ = Console.ReadLine()!;
+                string selectedOption = Console.ReadLine()!;
+                // Console.WriteLine("Välj ett alternativ 3 eller 4");
+                //  string valdAlternativ = Console.ReadLine()!;
 
-                bool running = true;
+                // bool running = true;
 
-                switch (valdAlternativ)
+                switch (selectedOption)
                 {
                     case "1":
 
-                        int amountOfMoney = HandleMoneyInput();
-
-                        ikran.TransferMoney(amountOfMoney);
-
+                        double amountToTransfer = HandleMoneyInput();
+                        ikran.TransferMoney(amountToTransfer);
                         break;
+
                     case "3":
-                        while (running)
+                        Bankkonto selectedAccount = ikran.PersonalAccount; // Default to Personal Account
+                        PrintOutAccountMeny();
+                        string accountOption = Console.ReadLine()!;
+
+
+                        switch (accountOption)
                         {
-                            Bankkonto valdKonto = ikran.VäljEttKonto();
-                            PrintOutAccountMeny();
-                            string kontotAlternativ = Console.ReadLine()!;
-
-
-                            switch (kontotAlternativ)
-                            {
 
                                 case "1":
-                                    valdKonto.CheckBalance();
-                                    break;
-                                case "2":
-                                    int amountOfMoneyToDraw = HandleMoneyInput();
-                                    valdKonto.Draw(amountOfMoneyToDraw);
-                                    break;
+                                selectedAccount.CheckBalance();
+                                break;
 
+                                case "2":
+                                double amountToDraw = HandleMoneyInput();
+                                selectedAccount.Draw(amountToDraw);
+                                break;
+               
                                 case "3":
-                                    int amountOfMoneyToDeposit = HandleMoneyInput();
-                                    valdKonto.Deposit(amountOfMoneyToDeposit);
-                                    break;
-                                default:
-                                    running = false;
+                                    double amountOfMoneyToDeposit = HandleMoneyInput();
+                                    selectedAccount.Deposit(amountToDeposit);
+                                break;
+                            default:
+
                                     break;
                             }
-                        } 
+
+
                        break;
                     case "4":
                         programIsRunning = false;
                         break;
                     default:
-                        Console.WriteLine("Något verkar vara fel, var vänlig och försök igen!");
+                        Console.WriteLine("Invalid option, please try again."); 
                         break;
                 }
 
@@ -66,28 +68,29 @@
 
         }
 
-        private static int HandleMoneyInput()
+        private static double HandleMoneyInput()
         {
-            Console.WriteLine("Hur mycket pengar vill du överföra?");
-            int amountOfMoney = Convert.ToInt32(Console.ReadLine());
-            return amountOfMoney;
+            Console.WriteLine("Enter the amount of money:");
+            return Convert.ToDouble(Console.ReadLine());
+
         }
 
         private static void PrintOutAccountMeny()
         {
-            Console.WriteLine("Du kan nu :");
+            Console.WriteLine("You can now:");
             Console.WriteLine("1- Check Balance");
             Console.WriteLine("2- Draw");
             Console.WriteLine("3- Deposit");
 
-            Console.WriteLine("Välj ett alternativ");
+            Console.WriteLine("Select an option:");
         }
 
         private static void PrintOutFirstMeny()
         {
-            Console.WriteLine("Välkomen till mitt bankkonto");
-            Console.WriteLine("3-- Överför pengar");
-            Console.WriteLine("4-- Exit");
+            Console.WriteLine("Welcome to the bank system");
+            Console.WriteLine("1- Transfer Money");
+            Console.WriteLine("3- Manage Account");
+            Console.WriteLine("4- Exit");
         }
     }
 }
